@@ -1,0 +1,805 @@
+
+% Default to the notebook output style
+
+    
+
+
+% Inherit from the specified cell style.
+
+
+
+
+    
+\documentclass[11pt]{article}
+
+    
+    
+    \usepackage[T1]{fontenc}
+    % Nicer default font (+ math font) than Computer Modern for most use cases
+    \usepackage{mathpazo}
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % We will generate all images so they have a width \maxwidth. This means
+    % that they will get their normal width if they fit onto the page, but
+    % are scaled down if they would overflow the margins.
+    \makeatletter
+    \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth
+    \else\Gin@nat@width\fi}
+    \makeatother
+    \let\Oldincludegraphics\includegraphics
+    % Set max figure width to be 80% of text width, for now hardcoded.
+    \renewcommand{\includegraphics}[1]{\Oldincludegraphics[width=.8\maxwidth]{#1}}
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionLabelFormat{nolabel}{}
+    \captionsetup{labelformat=nolabel}
+
+    \usepackage{adjustbox} % Used to constrain images to a maximum size 
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage[utf8x]{inputenc} % Allow utf-8 characters in the tex document
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range 
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    
+
+    
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatability definitions
+    \def\gt{>}
+    \def\lt{<}
+    % Document parameters
+    \title{nb10-sql-dataframes}
+    
+    
+    
+
+    % Pygments definitions
+    
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
+\expandafter\def\csname PY@tok@gs\endcsname{\let\PY@bf=\textbf}
+\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@go\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@fm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sa\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@dl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@mb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ch\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cpf\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % Exact colors from NB
+    \definecolor{incolor}{rgb}{0.0, 0.0, 0.5}
+    \definecolor{outcolor}{rgb}{0.545, 0.0, 0.0}
+
+
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+    \begin{document}
+    
+    
+    \maketitle
+    
+    
+
+    
+    \section{Spark SQL e Data Frames}\label{spark-sql-e-data-frames}
+
+    \paragraph{\texorpdfstring{\href{https://github.com/jadianes/spark-py-notebooks}{Baseado
+em "Introduction to Spark with Python, by Jose A.
+Dianes"}}{Baseado em "Introduction to Spark with Python, by Jose A. Dianes"}}\label{baseado-em-introduction-to-spark-with-python-by-jose-a.-dianes}
+
+    Este notebook apresentará os recursos do Spark para lidar com dados de
+maneira estruturada. Basicamente, tudo gira em torno do conceito de
+\emph{Data Frame} e usando \emph{SQL language} para consultá-los.
+Veremos como a abstração do quadro de dados, muito popular em outros
+ecossistemas de análise de dados (por exemplo, R e Python/Pandas), é
+muito poderosa ao executar a análise exploratória de dados. De fato, é
+muito fácil expressar consultas de dados quando usadas em conjunto com a
+linguagem SQL. Além disso, o Spark distribui essa estrutura de dados
+baseada em colunas de forma transparente, a fim de tornar o processo de
+consulta o mais eficiente possível.
+
+    \subsection{Fazendo download do
+Dataset}\label{fazendo-download-do-dataset}
+
+    Neste notebook, usaremos o conjunto de dados reduzido (10 por cento)
+fornecido para a KDD Cup 1999, contendo quase meio milhão de interações
+de rede. O arquivo é fornecido como um arquivo \emph{Gzip} que será
+baixado localmente.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}1}]:} \PY{k+kn}{from} \PY{n+nn}{urllib}\PY{n+nn}{.}\PY{n+nn}{request} \PY{k}{import} \PY{n}{urlretrieve}
+        
+        \PY{n}{f} \PY{o}{=} \PY{n}{urlretrieve}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{http://kdd.ics.uci.edu/databases/kddcup99/kddcup.data\PYZus{}10\PYZus{}percent.gz}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{kddcup.data\PYZus{}10\PYZus{}percent.gz}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \subsection{Obtendo os dados e criando o
+RDD}\label{obtendo-os-dados-e-criando-o-rdd}
+
+    Como fizemos nos cadernos anteriores, usaremos o conjunto de dados
+reduzido (10\%) fornecido para a
+\href{http://kdd.ics.uci.edu/databases/kddcup99/kddcup99.html}{KDD Cup
+1999}, contendo quase a metade milhões de interações nework. O arquivo é
+fornecido como um arquivo Gzip que será baixado localmente.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}2}]:} \PY{n}{data\PYZus{}file} \PY{o}{=} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{./kddcup.data\PYZus{}10\PYZus{}percent.gz}\PY{l+s+s2}{\PYZdq{}}
+        \PY{n}{raw\PYZus{}data} \PY{o}{=} \PY{n}{sc}\PY{o}{.}\PY{n}{textFile}\PY{p}{(}\PY{n}{data\PYZus{}file}\PY{p}{)}\PY{o}{.}\PY{n}{cache}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \subsection{Obtendo um quadro de
+dados}\label{obtendo-um-quadro-de-dados}
+
+    Um Spark \texttt{DataFrame} é uma coleção distribuída de dados
+organizados em colunas nomeadas. É conceitualmente equivalente a uma
+tabela em um banco de dados relacional ou a um quadro de dados em R ou
+Pandas. Eles podem ser construídos a partir de uma ampla variedade de
+fontes, como um RDD existente no nosso caso.
+
+    O ponto de entrada em toda a funcionalidade do SQL no Spark é a classe
+\texttt{SQLContext}. Para criar uma instância básica, tudo o que
+precisamos é de uma referência ao \texttt{SparkContext}. Como estamos
+executando o Spark no modo shell (usando pySpark), podemos usar o objeto
+de contexto global \texttt{sc} para essa finalidade.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}3}]:} \PY{k+kn}{from} \PY{n+nn}{pyspark}\PY{n+nn}{.}\PY{n+nn}{sql} \PY{k}{import} \PY{n}{SQLContext}
+        \PY{n}{sqlContext} \PY{o}{=} \PY{n}{SQLContext}\PY{p}{(}\PY{n}{sc}\PY{p}{)}
+\end{Verbatim}
+
+
+    \subsubsection{Inferir o esquema}\label{inferir-o-esquema}
+
+    Com um \texttt{SQLContext}, estamos prontos para criar um
+\texttt{DataFrame} a partir do nosso RDD existente. Mas primeiro
+precisamos informar ao Spark SQL o esquema em nossos dados.
+
+    O Spark SQL pode converter um RDD de objetos \texttt{Row} em
+um\texttt{DataFrame}. As linhas são construídas passando uma lista de
+pares chave/valor como \emph{kwargs} para a classe \texttt{Row}. As
+chaves definem os nomes das colunas e os tipos são inferidos observando
+a primeira linha. Portanto, é importante que não haja dados ausentes na
+primeira linha do RDD para inferir corretamente o esquema.
+
+    No nosso caso, primeiro precisamos dividir os dados separados por
+vírgula e, em seguida, usar as informações na descrição da tarefa do KDD
+de 1999 para obter os
+\href{http://kdd.ics.uci.edu/databases/kddcup99/kddcup.names}{column
+names}.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}16}]:} \PY{k+kn}{from} \PY{n+nn}{pyspark}\PY{n+nn}{.}\PY{n+nn}{sql} \PY{k}{import} \PY{n}{Row}
+         
+         \PY{n}{csv\PYZus{}data} \PY{o}{=} \PY{n}{raw\PYZus{}data}\PY{o}{.}\PY{n}{map}\PY{p}{(}\PY{k}{lambda} \PY{n}{l}\PY{p}{:} \PY{n}{l}\PY{o}{.}\PY{n}{split}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{,}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}\PY{p}{)}
+         \PY{n}{row\PYZus{}data} \PY{o}{=} \PY{n}{csv\PYZus{}data}\PY{o}{.}\PY{n}{map}\PY{p}{(}\PY{k}{lambda} \PY{n}{p}\PY{p}{:} \PY{n}{Row}\PY{p}{(}
+             \PY{n}{duration}\PY{o}{=}\PY{n+nb}{int}\PY{p}{(}\PY{n}{p}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}\PY{p}{,} 
+             \PY{n}{protocol\PYZus{}type}\PY{o}{=}\PY{n}{p}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+             \PY{n}{service}\PY{o}{=}\PY{n}{p}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}\PY{p}{,}
+             \PY{n}{flag}\PY{o}{=}\PY{n}{p}\PY{p}{[}\PY{l+m+mi}{3}\PY{p}{]}\PY{p}{,}
+             \PY{n}{src\PYZus{}bytes}\PY{o}{=}\PY{n+nb}{int}\PY{p}{(}\PY{n}{p}\PY{p}{[}\PY{l+m+mi}{4}\PY{p}{]}\PY{p}{)}\PY{p}{,}
+             \PY{n}{dst\PYZus{}bytes}\PY{o}{=}\PY{n+nb}{int}\PY{p}{(}\PY{n}{p}\PY{p}{[}\PY{l+m+mi}{5}\PY{p}{]}\PY{p}{)}
+             \PY{p}{)}
+         \PY{p}{)}
+\end{Verbatim}
+
+
+    Uma vez que tenhamos o nosso RDD de \texttt{Row}, podemos inferir e
+registrar o esquema.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}17}]:} \PY{n}{interactions\PYZus{}df} \PY{o}{=} \PY{n}{sqlContext}\PY{o}{.}\PY{n}{createDataFrame}\PY{p}{(}\PY{n}{row\PYZus{}data}\PY{p}{)}
+         \PY{n}{interactions\PYZus{}df}\PY{o}{.}\PY{n}{registerTempTable}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{interactions}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    Agora podemos executar consultas SQL sobre nosso quadro de dados que foi
+registrado como uma tabela.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}18}]:} \PY{c+c1}{\PYZsh{} Select tcp network interactions with more than 1 second duration and no transfer from destination}
+         \PY{n}{tcp\PYZus{}interactions} \PY{o}{=} \PY{n}{sqlContext}\PY{o}{.}\PY{n}{sql}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}\PYZdq{}\PYZdq{}}
+         \PY{l+s+s2}{    SELECT duration, dst\PYZus{}bytes FROM interactions WHERE protocol\PYZus{}type = }\PY{l+s+s2}{\PYZsq{}}\PY{l+s+s2}{tcp}\PY{l+s+s2}{\PYZsq{}}\PY{l+s+s2}{ AND duration \PYZgt{} 1000 AND dst\PYZus{}bytes = 0}
+         \PY{l+s+s2}{\PYZdq{}\PYZdq{}\PYZdq{}}\PY{p}{)}
+         \PY{n}{tcp\PYZus{}interactions}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
++--------+---------+
+|duration|dst\_bytes|
++--------+---------+
+|    5057|        0|
+|    5059|        0|
+|    5051|        0|
+|    5056|        0|
+|    5051|        0|
+|    5039|        0|
+|    5062|        0|
+|    5041|        0|
+|    5056|        0|
+|    5064|        0|
+|    5043|        0|
+|    5061|        0|
+|    5049|        0|
+|    5061|        0|
+|    5048|        0|
+|    5047|        0|
+|    5044|        0|
+|    5063|        0|
+|    5068|        0|
+|    5062|        0|
++--------+---------+
+only showing top 20 rows
+
+
+    \end{Verbatim}
+
+    Os resultados das consultas SQL são RDDs e suportam todas as operações
+RDD normais.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}19}]:} \PY{c+c1}{\PYZsh{} Output duration together with dst\PYZus{}bytes}
+         \PY{n}{tcp\PYZus{}interactions\PYZus{}out} \PY{o}{=} \PY{n}{tcp\PYZus{}interactions}\PY{o}{.}\PY{n}{rdd}\PY{o}{.}\PY{n}{map}\PY{p}{(}\PY{k}{lambda} \PY{n}{p}\PY{p}{:} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Duration: }\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s2}{, Dest. bytes: }\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{p}\PY{o}{.}\PY{n}{duration}\PY{p}{,} \PY{n}{p}\PY{o}{.}\PY{n}{dst\PYZus{}bytes}\PY{p}{)}\PY{p}{)}
+         \PY{k}{for} \PY{n}{ti\PYZus{}out} \PY{o+ow}{in} \PY{n}{tcp\PYZus{}interactions\PYZus{}out}\PY{o}{.}\PY{n}{collect}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+           \PY{n+nb}{print}\PY{p}{(}\PY{n}{ti\PYZus{}out}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Duration: 5057, Dest. bytes: 0
+Duration: 5059, Dest. bytes: 0
+Duration: 5051, Dest. bytes: 0
+Duration: 5056, Dest. bytes: 0
+Duration: 5051, Dest. bytes: 0
+Duration: 5039, Dest. bytes: 0
+Duration: 5062, Dest. bytes: 0
+Duration: 5041, Dest. bytes: 0
+Duration: 5056, Dest. bytes: 0
+Duration: 5064, Dest. bytes: 0
+Duration: 5043, Dest. bytes: 0
+Duration: 5061, Dest. bytes: 0
+Duration: 5049, Dest. bytes: 0
+Duration: 5061, Dest. bytes: 0
+Duration: 5048, Dest. bytes: 0
+Duration: 5047, Dest. bytes: 0
+Duration: 5044, Dest. bytes: 0
+Duration: 5063, Dest. bytes: 0
+Duration: 5068, Dest. bytes: 0
+Duration: 5062, Dest. bytes: 0
+Duration: 5046, Dest. bytes: 0
+Duration: 5052, Dest. bytes: 0
+Duration: 5044, Dest. bytes: 0
+Duration: 5054, Dest. bytes: 0
+Duration: 5039, Dest. bytes: 0
+Duration: 5058, Dest. bytes: 0
+Duration: 5051, Dest. bytes: 0
+Duration: 5032, Dest. bytes: 0
+Duration: 5063, Dest. bytes: 0
+Duration: 5040, Dest. bytes: 0
+Duration: 5051, Dest. bytes: 0
+Duration: 5066, Dest. bytes: 0
+Duration: 5044, Dest. bytes: 0
+Duration: 5051, Dest. bytes: 0
+Duration: 5036, Dest. bytes: 0
+Duration: 5055, Dest. bytes: 0
+Duration: 2426, Dest. bytes: 0
+Duration: 5047, Dest. bytes: 0
+Duration: 5057, Dest. bytes: 0
+Duration: 5037, Dest. bytes: 0
+Duration: 5057, Dest. bytes: 0
+Duration: 5062, Dest. bytes: 0
+Duration: 5051, Dest. bytes: 0
+Duration: 5051, Dest. bytes: 0
+Duration: 5053, Dest. bytes: 0
+Duration: 5064, Dest. bytes: 0
+Duration: 5044, Dest. bytes: 0
+Duration: 5051, Dest. bytes: 0
+Duration: 5033, Dest. bytes: 0
+Duration: 5066, Dest. bytes: 0
+Duration: 5063, Dest. bytes: 0
+Duration: 5056, Dest. bytes: 0
+Duration: 5042, Dest. bytes: 0
+Duration: 5063, Dest. bytes: 0
+Duration: 5060, Dest. bytes: 0
+Duration: 5056, Dest. bytes: 0
+Duration: 5049, Dest. bytes: 0
+Duration: 5043, Dest. bytes: 0
+Duration: 5039, Dest. bytes: 0
+Duration: 5041, Dest. bytes: 0
+Duration: 42448, Dest. bytes: 0
+Duration: 42088, Dest. bytes: 0
+Duration: 41065, Dest. bytes: 0
+Duration: 40929, Dest. bytes: 0
+Duration: 40806, Dest. bytes: 0
+Duration: 40682, Dest. bytes: 0
+Duration: 40571, Dest. bytes: 0
+Duration: 40448, Dest. bytes: 0
+Duration: 40339, Dest. bytes: 0
+Duration: 40232, Dest. bytes: 0
+Duration: 40121, Dest. bytes: 0
+Duration: 36783, Dest. bytes: 0
+Duration: 36674, Dest. bytes: 0
+Duration: 36570, Dest. bytes: 0
+Duration: 36467, Dest. bytes: 0
+Duration: 36323, Dest. bytes: 0
+Duration: 36204, Dest. bytes: 0
+Duration: 32038, Dest. bytes: 0
+Duration: 31925, Dest. bytes: 0
+Duration: 31809, Dest. bytes: 0
+Duration: 31709, Dest. bytes: 0
+Duration: 31601, Dest. bytes: 0
+Duration: 31501, Dest. bytes: 0
+Duration: 31401, Dest. bytes: 0
+Duration: 31301, Dest. bytes: 0
+Duration: 31194, Dest. bytes: 0
+Duration: 31061, Dest. bytes: 0
+Duration: 30935, Dest. bytes: 0
+Duration: 30835, Dest. bytes: 0
+Duration: 30735, Dest. bytes: 0
+Duration: 30619, Dest. bytes: 0
+Duration: 30518, Dest. bytes: 0
+Duration: 30418, Dest. bytes: 0
+Duration: 30317, Dest. bytes: 0
+Duration: 30217, Dest. bytes: 0
+Duration: 30077, Dest. bytes: 0
+Duration: 25420, Dest. bytes: 0
+Duration: 22921, Dest. bytes: 0
+Duration: 22821, Dest. bytes: 0
+Duration: 22721, Dest. bytes: 0
+Duration: 22616, Dest. bytes: 0
+Duration: 22516, Dest. bytes: 0
+Duration: 22416, Dest. bytes: 0
+Duration: 22316, Dest. bytes: 0
+Duration: 22216, Dest. bytes: 0
+Duration: 21987, Dest. bytes: 0
+Duration: 21887, Dest. bytes: 0
+Duration: 21767, Dest. bytes: 0
+Duration: 21661, Dest. bytes: 0
+Duration: 21561, Dest. bytes: 0
+Duration: 21455, Dest. bytes: 0
+Duration: 21334, Dest. bytes: 0
+Duration: 21223, Dest. bytes: 0
+Duration: 21123, Dest. bytes: 0
+Duration: 20983, Dest. bytes: 0
+Duration: 14682, Dest. bytes: 0
+Duration: 14420, Dest. bytes: 0
+Duration: 14319, Dest. bytes: 0
+Duration: 14198, Dest. bytes: 0
+Duration: 14098, Dest. bytes: 0
+Duration: 13998, Dest. bytes: 0
+Duration: 13898, Dest. bytes: 0
+Duration: 13796, Dest. bytes: 0
+Duration: 13678, Dest. bytes: 0
+Duration: 13578, Dest. bytes: 0
+Duration: 13448, Dest. bytes: 0
+Duration: 13348, Dest. bytes: 0
+Duration: 13241, Dest. bytes: 0
+Duration: 13141, Dest. bytes: 0
+Duration: 13033, Dest. bytes: 0
+Duration: 12933, Dest. bytes: 0
+Duration: 12833, Dest. bytes: 0
+Duration: 12733, Dest. bytes: 0
+Duration: 12001, Dest. bytes: 0
+Duration: 5678, Dest. bytes: 0
+Duration: 5010, Dest. bytes: 0
+Duration: 1298, Dest. bytes: 0
+Duration: 1031, Dest. bytes: 0
+Duration: 36438, Dest. bytes: 0
+
+    \end{Verbatim}
+
+    Podemos facilmente dar uma olhada no nosso esquema de quadros de dados
+usando o \texttt{printSchema}.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}20}]:} \PY{n}{interactions\PYZus{}df}\PY{o}{.}\PY{n}{printSchema}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+root
+ |-- dst\_bytes: long (nullable = true)
+ |-- duration: long (nullable = true)
+ |-- flag: string (nullable = true)
+ |-- protocol\_type: string (nullable = true)
+ |-- service: string (nullable = true)
+ |-- src\_bytes: long (nullable = true)
+
+
+    \end{Verbatim}
+
+    \subsection{\texorpdfstring{Consultas como operações
+\texttt{DataFrame}}{Consultas como operações DataFrame}}\label{consultas-como-operauxe7uxf5es-dataframe}
+
+    O Spark \texttt{DataFrame} fornece uma linguagem específica de domínio
+para manipulação de dados estruturados. Essa linguagem inclui métodos
+que podemos concatenar para fazer seleção, filtragem, agrupamento, etc.
+Por exemplo, digamos que queremos contar quantas interações existem para
+cada tipo de protocolo. Nós podemos proceder da seguinte forma.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}21}]:} \PY{k+kn}{from} \PY{n+nn}{time} \PY{k}{import} \PY{n}{time}
+         
+         \PY{n}{t0} \PY{o}{=} \PY{n}{time}\PY{p}{(}\PY{p}{)}
+         \PY{n}{interactions\PYZus{}df}\PY{o}{.}\PY{n}{select}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{protocol\PYZus{}type}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{duration}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{dst\PYZus{}bytes}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}\PY{o}{.}\PY{n}{groupBy}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{protocol\PYZus{}type}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}\PY{o}{.}\PY{n}{count}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+         \PY{n}{tt} \PY{o}{=} \PY{n}{time}\PY{p}{(}\PY{p}{)} \PY{o}{\PYZhy{}} \PY{n}{t0}
+         
+         \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Query performed in }\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s2}{ seconds}\PY{l+s+s2}{\PYZdq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n+nb}{round}\PY{p}{(}\PY{n}{tt}\PY{p}{,}\PY{l+m+mi}{3}\PY{p}{)}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
++-------------+------+
+|protocol\_type| count|
++-------------+------+
+|          tcp|190065|
+|          udp| 20354|
+|         icmp|283602|
++-------------+------+
+
+Query performed in 10.102 seconds
+
+    \end{Verbatim}
+
+    Agora imagine que queremos contar quantas interações duram mais de 1
+segundo, sem transferência de dados do destino, agrupadas por tipo de
+protocolo. Podemos apenas adicionar para filtrar chamadas para o
+anterior.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}22}]:} \PY{n}{t0} \PY{o}{=} \PY{n}{time}\PY{p}{(}\PY{p}{)}
+         \PY{n}{interactions\PYZus{}df}\PY{o}{.}\PY{n}{select}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{protocol\PYZus{}type}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{duration}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{dst\PYZus{}bytes}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}\PY{o}{.}\PY{n}{filter}\PY{p}{(}\PY{n}{interactions\PYZus{}df}\PY{o}{.}\PY{n}{duration}\PY{o}{\PYZgt{}}\PY{l+m+mi}{1000}\PY{p}{)}\PY{o}{.}\PY{n}{filter}\PY{p}{(}\PY{n}{interactions\PYZus{}df}\PY{o}{.}\PY{n}{dst\PYZus{}bytes}\PY{o}{==}\PY{l+m+mi}{0}\PY{p}{)}\PY{o}{.}\PY{n}{groupBy}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{protocol\PYZus{}type}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}\PY{o}{.}\PY{n}{count}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+         \PY{n}{tt} \PY{o}{=} \PY{n}{time}\PY{p}{(}\PY{p}{)} \PY{o}{\PYZhy{}} \PY{n}{t0}
+         
+         \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Query performed in }\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s2}{ seconds}\PY{l+s+s2}{\PYZdq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n+nb}{round}\PY{p}{(}\PY{n}{tt}\PY{p}{,}\PY{l+m+mi}{3}\PY{p}{)}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
++-------------+-----+
+|protocol\_type|count|
++-------------+-----+
+|          tcp|  139|
++-------------+-----+
+
+Query performed in 10.741 seconds
+
+    \end{Verbatim}
+
+    Podemos usar isso para realizar algumas
+\href{http://en.wikipedia.org/wiki/Exploratory_data_analysis}{exploratory
+data analysis}. Vamos contar quantas interações normais e de ataque nós
+temos. Primeiro, precisamos adicionar a coluna de rótulo aos nossos
+dados.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}23}]:} \PY{k}{def} \PY{n+nf}{get\PYZus{}label\PYZus{}type}\PY{p}{(}\PY{n}{label}\PY{p}{)}\PY{p}{:}
+             \PY{k}{if} \PY{n}{label}\PY{o}{!=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{normal.}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:}
+                 \PY{k}{return} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{attack}\PY{l+s+s2}{\PYZdq{}}
+             \PY{k}{else}\PY{p}{:}
+                 \PY{k}{return} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{normal}\PY{l+s+s2}{\PYZdq{}}
+             
+         \PY{n}{row\PYZus{}labeled\PYZus{}data} \PY{o}{=} \PY{n}{csv\PYZus{}data}\PY{o}{.}\PY{n}{map}\PY{p}{(}\PY{k}{lambda} \PY{n}{p}\PY{p}{:} \PY{n}{Row}\PY{p}{(}
+             \PY{n}{duration}\PY{o}{=}\PY{n+nb}{int}\PY{p}{(}\PY{n}{p}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}\PY{p}{,} 
+             \PY{n}{protocol\PYZus{}type}\PY{o}{=}\PY{n}{p}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{,}
+             \PY{n}{service}\PY{o}{=}\PY{n}{p}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}\PY{p}{,}
+             \PY{n}{flag}\PY{o}{=}\PY{n}{p}\PY{p}{[}\PY{l+m+mi}{3}\PY{p}{]}\PY{p}{,}
+             \PY{n}{src\PYZus{}bytes}\PY{o}{=}\PY{n+nb}{int}\PY{p}{(}\PY{n}{p}\PY{p}{[}\PY{l+m+mi}{4}\PY{p}{]}\PY{p}{)}\PY{p}{,}
+             \PY{n}{dst\PYZus{}bytes}\PY{o}{=}\PY{n+nb}{int}\PY{p}{(}\PY{n}{p}\PY{p}{[}\PY{l+m+mi}{5}\PY{p}{]}\PY{p}{)}\PY{p}{,}
+             \PY{n}{label}\PY{o}{=}\PY{n}{get\PYZus{}label\PYZus{}type}\PY{p}{(}\PY{n}{p}\PY{p}{[}\PY{l+m+mi}{41}\PY{p}{]}\PY{p}{)}
+             \PY{p}{)}
+         \PY{p}{)}
+         \PY{n}{interactions\PYZus{}labeled\PYZus{}df} \PY{o}{=} \PY{n}{sqlContext}\PY{o}{.}\PY{n}{createDataFrame}\PY{p}{(}\PY{n}{row\PYZus{}labeled\PYZus{}data}\PY{p}{)}
+\end{Verbatim}
+
+
+    Desta vez, não precisamos registrar o esquema, pois vamos usar a
+interface de consulta OO.
+
+    Vamos verificar o anterior realmente funciona contando dados de ataque e
+normal em nosso quadro de dados.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}24}]:} \PY{n}{t0} \PY{o}{=} \PY{n}{time}\PY{p}{(}\PY{p}{)}
+         \PY{n}{interactions\PYZus{}labeled\PYZus{}df}\PY{o}{.}\PY{n}{select}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{label}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}\PY{o}{.}\PY{n}{groupBy}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{label}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}\PY{o}{.}\PY{n}{count}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+         \PY{n}{tt} \PY{o}{=} \PY{n}{time}\PY{p}{(}\PY{p}{)} \PY{o}{\PYZhy{}} \PY{n}{t0}
+         
+         \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Query performed in }\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s2}{ seconds}\PY{l+s+s2}{\PYZdq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n+nb}{round}\PY{p}{(}\PY{n}{tt}\PY{p}{,}\PY{l+m+mi}{3}\PY{p}{)}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
++------+------+
+| label| count|
++------+------+
+|normal| 97278|
+|attack|396743|
++------+------+
+
+Query performed in 10.21 seconds
+
+    \end{Verbatim}
+
+    Agora queremos contá-las por rótulo e tipo de protocolo, para ver o quão
+importante é o tipo de protocolo detectar quando uma interação é ou não
+um ataque.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}25}]:} \PY{n}{t0} \PY{o}{=} \PY{n}{time}\PY{p}{(}\PY{p}{)}
+         \PY{n}{interactions\PYZus{}labeled\PYZus{}df}\PY{o}{.}\PY{n}{select}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{label}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{protocol\PYZus{}type}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}\PY{o}{.}\PY{n}{groupBy}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{label}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{protocol\PYZus{}type}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}\PY{o}{.}\PY{n}{count}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+         \PY{n}{tt} \PY{o}{=} \PY{n}{time}\PY{p}{(}\PY{p}{)} \PY{o}{\PYZhy{}} \PY{n}{t0}
+         
+         \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Query performed in }\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s2}{ seconds}\PY{l+s+s2}{\PYZdq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n+nb}{round}\PY{p}{(}\PY{n}{tt}\PY{p}{,}\PY{l+m+mi}{3}\PY{p}{)}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
++------+-------------+------+
+| label|protocol\_type| count|
++------+-------------+------+
+|normal|          udp| 19177|
+|normal|         icmp|  1288|
+|normal|          tcp| 76813|
+|attack|         icmp|282314|
+|attack|          tcp|113252|
+|attack|          udp|  1177|
++------+-------------+------+
+
+Query performed in 9.532 seconds
+
+    \end{Verbatim}
+
+    À primeira vista, parece que as interações \emph{udp} estão em menor
+proporção entre ataques de rede e outros tipos de protocolos.
+
+    E podemos fazer agrupamentos muito mais sofisticados. Por exemplo,
+adicione ao anterior um "split" baseado na transferência de dados do
+destino.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}26}]:} \PY{n}{t0} \PY{o}{=} \PY{n}{time}\PY{p}{(}\PY{p}{)}
+         \PY{n}{interactions\PYZus{}labeled\PYZus{}df}\PY{o}{.}\PY{n}{select}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{label}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{protocol\PYZus{}type}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{dst\PYZus{}bytes}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}\PY{o}{.}\PY{n}{groupBy}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{label}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{protocol\PYZus{}type}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{interactions\PYZus{}labeled\PYZus{}df}\PY{o}{.}\PY{n}{dst\PYZus{}bytes}\PY{o}{==}\PY{l+m+mi}{0}\PY{p}{)}\PY{o}{.}\PY{n}{count}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+         \PY{n}{tt} \PY{o}{=} \PY{n}{time}\PY{p}{(}\PY{p}{)} \PY{o}{\PYZhy{}} \PY{n}{t0}
+         
+         \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Query performed in }\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s2}{ seconds}\PY{l+s+s2}{\PYZdq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n+nb}{round}\PY{p}{(}\PY{n}{tt}\PY{p}{,}\PY{l+m+mi}{3}\PY{p}{)}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
++------+-------------+---------------+------+
+| label|protocol\_type|(dst\_bytes = 0)| count|
++------+-------------+---------------+------+
+|normal|          udp|          false| 15583|
+|attack|          udp|          false|    11|
+|attack|          tcp|           true|110583|
+|normal|          tcp|          false| 67500|
+|attack|         icmp|           true|282314|
+|attack|          tcp|          false|  2669|
+|normal|          tcp|           true|  9313|
+|normal|          udp|           true|  3594|
+|normal|         icmp|           true|  1288|
+|attack|          udp|           true|  1166|
++------+-------------+---------------+------+
+
+Query performed in 10.407 seconds
+
+    \end{Verbatim}
+
+    Vemos quão relevante é essa nova divisão para determinar se uma
+interação de rede é um ataque.
+
+    Vamos parar por aqui, mas podemos ver como esse tipo de consulta é
+poderosa para explorar nossos dados. Na verdade, podemos replicar todas
+as divisões que vimos nos cadernos anteriores, ao introduzir árvores de
+classificação, apenas selecionando, tateando e filtrando nosso
+dataframe. Para uma lista mais detalhada (mas menos real) das operações
+e fontes de dados do DataFrame do Spark, dê uma olhada na documentação
+oficial
+\href{https://spark.apache.org/docs/latest/sql-programming-guide.html\#dataframe-operations}{aqui}.
+
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+    \end{document}
