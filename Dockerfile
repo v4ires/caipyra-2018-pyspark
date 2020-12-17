@@ -1,7 +1,7 @@
 FROM ubuntu:latest
 
 ENV PATH="/opt/gtk/bin:${PATH}"
-ENV SPARK_HOME="/opt/spark-2.3.0-bin-hadoop2.7"
+ENV SPARK_HOME="/opt/spark-3.0.1-bin-hadoop2.7"
 ENV JAVA_HOME="/usr/lib/jvm/java-8-openjdk-amd64"
 ENV ANACONDA_HOME="/root/miniconda3"
 ENV PYSPARK_DRIVER_PYTHON="${ANACONDA_HOME}/bin/jupyter"
@@ -25,14 +25,14 @@ RUN wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh
 RUN bash Miniconda3-latest-Linux-x86_64.sh -b
 
 # Install Python Packages
-RUN conda install numpy matplotlib scikit-learn seaborn jupyter
+RUN conda install numpy matplotlib jupyter
 
 # Setup Jupyter Notebook
 RUN mkdir -p ~/.jupyter/
 RUN echo "c.NotebookApp.token = u''" >> ~/.jupyter/jupyter_notebook_config.py
 
 # Install Spark
-RUN wget http://ftp.unicamp.br/pub/apache/spark/spark-2.3.0/spark-2.3.0-bin-hadoop2.7.tgz
-RUN tar -zxvf spark-2.3.0-bin-hadoop2.7.tgz -C /opt
+RUN wget https://downloads.apache.org/spark/spark-3.0.1/spark-3.0.1-bin-hadoop2.7.tgz
+RUN tar -zxvf spark-3.0.1-bin-hadoop2.7.tgz -C /opt
 
 WORKDIR $HOME/caipyra-2018-pyspark
