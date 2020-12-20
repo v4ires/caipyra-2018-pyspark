@@ -25,7 +25,7 @@ RUN wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh
 RUN bash Miniconda3-latest-Linux-x86_64.sh -b
 
 # Install Python Packages
-RUN conda install numpy matplotlib jupyter
+RUN conda install numpy matplotlib jupyter pandas seaborn scikit-learn
 
 # Setup Jupyter Notebook
 RUN mkdir -p ~/.jupyter/
